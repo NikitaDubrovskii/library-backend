@@ -42,7 +42,9 @@ public class UserService {
     }
 
     @Transactional
-    public void delete(User user) {
-        userRepository.delete(user);
+    public User deleteById(Long id) {
+        User user = getById(id);
+        userRepository.deleteById(id);
+        return user;
     }
 }

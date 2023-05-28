@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 // модель пользователя
 
 @Entity
-@Table(name = "user")
+@Table(name = "usr")
 @Getter
 @Setter
 @NoArgsConstructor

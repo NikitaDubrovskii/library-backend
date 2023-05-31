@@ -1,7 +1,10 @@
 package by.dubrovsky.librarybackend.service;
 
 import by.dubrovsky.librarybackend.entity.Book;
+import by.dubrovsky.librarybackend.entity.User;
 import by.dubrovsky.librarybackend.repository.BookRepository;
+import by.dubrovsky.librarybackend.repository.UserRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,9 +15,11 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class BookService {
     private final BookRepository bookRepository;
+    private final UserRepository userRepository;
 
-    public BookService(BookRepository bookRepository) {
+    public BookService(BookRepository bookRepository, UserRepository userRepository) {
         this.bookRepository = bookRepository;
+        this.userRepository = userRepository;
     }
 
     @Transactional
@@ -35,8 +40,9 @@ public class BookService {
     }
 
     @Transactional
-    public Book update(Book book) {
-        return bookRepository.save(book);
+    public Book update(Book bookFromDb, Book bookToUpdate) {
+        BeanUtils.copyProperties(bookToUpdate, bookFromDb, "id");
+        return bookRepository.save(bookFromDb);
     }
 
     @Transactional
@@ -44,5 +50,14 @@ public class BookService {
         Book book = getById(id);
         bookRepository.deleteById(id);
         return book;
+    }
+
+    @Transactional
+    public Book giveBook(Book book, User user) {
+        book.setUserId(user);
+        Book bookToUpdate = new Book();
+        BeanUtils.copyProperties(book, bookToUpdate,
+                "id", "title", "author", "page", "publicationDate", "quantity");
+        return bookRepository.save(book);
     }
 }

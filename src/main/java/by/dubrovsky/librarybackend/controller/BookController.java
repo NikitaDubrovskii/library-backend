@@ -1,6 +1,7 @@
 package by.dubrovsky.librarybackend.controller;
 
 import by.dubrovsky.librarybackend.entity.Book;
+import by.dubrovsky.librarybackend.entity.User;
 import by.dubrovsky.librarybackend.service.BookService;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,13 +32,18 @@ public class BookController {
         return bookService.getAll();
     }
 
-    @PutMapping("/update")
-    public Book update(@RequestBody Book book) {
-        return bookService.update(book);
+    @PutMapping("/update/{id}")
+    public Book update(@PathVariable("id") Book bookFromDb, @RequestBody Book bookToUpdate) {
+        return bookService.update(bookFromDb, bookToUpdate);
     }
 
     @DeleteMapping("/delete/{id}")
     public Book delete(@PathVariable("id") Long id) {
         return bookService.deleteById(id);
+    }
+
+    @PutMapping("/{bookId}/{userId}")
+    public Book giveBook(@PathVariable("bookId") Book book, @PathVariable("userId") User user) {
+        return bookService.giveBook(book, user);
     }
 }

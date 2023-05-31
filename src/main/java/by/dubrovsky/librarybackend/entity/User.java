@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 // модель пользователя
 
@@ -38,16 +39,18 @@ public class User {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime registrationDate;
 
-    @Column(name = "role")
-    private String role;
+    @Column(name = "admin")
+    private Boolean admin;
 
-    public User(String firstName, String secondName, Integer age, String email, LocalDateTime registrationDate, String role) {
+
+    public User(String firstName, String secondName, Integer age,
+                String email, LocalDateTime registrationDate, Boolean admin) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.age = age;
         this.email = email;
         this.registrationDate = registrationDate;
-        this.role = role;
+        this.admin = admin;
     }
 }
 

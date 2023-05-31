@@ -32,9 +32,9 @@ public class UserController {
         return userService.getAll();
     }
 
-    @PutMapping("/update")
-    public User update(@RequestBody User user) {
-        return userService.update(user);
+    @PutMapping("/update/{id}")
+    public User update(@PathVariable("id") User userFromDb, @RequestBody User userToUpdate) {
+        return userService.update(userFromDb, userToUpdate);
     }
 
     @DeleteMapping("/delete/{id}")

@@ -76,4 +76,14 @@ public class BookService {
         Book save = bookRepository.save(book);
         return bookFacade.bookToDTO(save);
     }
+
+    @Transactional
+    public BookDTO takeBook(Book book) {
+        book.setUserId(null);
+        Book bookToUpdate = new Book();
+        BeanUtils.copyProperties(book, bookToUpdate,
+                "id", "title", "author", "page", "publicationDate", "quantity");
+        Book save = bookRepository.save(book);
+        return bookFacade.bookToDTO(save);
+    }
 }

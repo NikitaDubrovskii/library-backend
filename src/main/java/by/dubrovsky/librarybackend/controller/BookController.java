@@ -44,7 +44,13 @@ public class BookController {
     }
 
     @PutMapping("/{bookId}/{userId}")
-    public BookDTO giveBook(@PathVariable("bookId") Book book, @PathVariable("userId") User user) {
+    public BookDTO giveBook(@PathVariable("bookId") Book book,
+                            @PathVariable("userId") User user) {
         return bookService.giveBook(book, user);
+    }
+
+    @PutMapping("/{bookId}")
+    public BookDTO takeBook(@PathVariable("bookId") Book book) {
+        return bookService.takeBook(book);
     }
 }

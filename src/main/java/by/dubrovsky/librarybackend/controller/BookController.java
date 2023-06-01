@@ -1,5 +1,6 @@
 package by.dubrovsky.librarybackend.controller;
 
+import by.dubrovsky.librarybackend.dto.BookDTO;
 import by.dubrovsky.librarybackend.entity.Book;
 import by.dubrovsky.librarybackend.entity.User;
 import by.dubrovsky.librarybackend.service.BookService;
@@ -18,32 +19,32 @@ public class BookController {
     }
 
     @PostMapping("/add")
-    public Book add(@RequestBody Book book) {
+    public BookDTO add(@RequestBody Book book) {
         return bookService.add(book);
     }
 
     @GetMapping("/{id}")
-    public Book getById(@PathVariable("id") Long id) {
+    public BookDTO getById(@PathVariable("id") Long id) {
         return bookService.getById(id);
     }
 
     @GetMapping()
-    public List<Book> getAll() {
+    public List<BookDTO> getAll() {
         return bookService.getAll();
     }
 
     @PutMapping("/update/{id}")
-    public Book update(@PathVariable("id") Book bookFromDb, @RequestBody Book bookToUpdate) {
+    public BookDTO update(@PathVariable("id") Book bookFromDb, @RequestBody Book bookToUpdate) {
         return bookService.update(bookFromDb, bookToUpdate);
     }
 
     @DeleteMapping("/delete/{id}")
-    public Book delete(@PathVariable("id") Long id) {
+    public BookDTO delete(@PathVariable("id") Long id) {
         return bookService.deleteById(id);
     }
 
     @PutMapping("/{bookId}/{userId}")
-    public Book giveBook(@PathVariable("bookId") Book book, @PathVariable("userId") User user) {
+    public BookDTO giveBook(@PathVariable("bookId") Book book, @PathVariable("userId") User user) {
         return bookService.giveBook(book, user);
     }
 }

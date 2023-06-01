@@ -1,6 +1,6 @@
 package by.dubrovsky.librarybackend.controller;
 
-import by.dubrovsky.librarybackend.entity.Book;
+import by.dubrovsky.librarybackend.dto.UserDTO;
 import by.dubrovsky.librarybackend.entity.User;
 import by.dubrovsky.librarybackend.service.UserService;
 import org.springframework.web.bind.annotation.*;
@@ -18,27 +18,27 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public User add(@RequestBody User user) {
+    public UserDTO add(@RequestBody User user) {
         return userService.add(user);
     }
 
     @GetMapping("/{id}")
-    public User getById(@PathVariable("id") Long id) {
+    public UserDTO getById(@PathVariable("id") Long id) {
         return userService.getById(id);
     }
 
     @GetMapping()
-    public List<User> getAll() {
+    public List<UserDTO> getAll() {
         return userService.getAll();
     }
 
     @PutMapping("/update/{id}")
-    public User update(@PathVariable("id") User userFromDb, @RequestBody User userToUpdate) {
+    public UserDTO update(@PathVariable("id") User userFromDb, @RequestBody User userToUpdate) {
         return userService.update(userFromDb, userToUpdate);
     }
 
     @DeleteMapping("/delete/{id}")
-    public User delete(@PathVariable("id") Long id) {
+    public UserDTO delete(@PathVariable("id") Long id) {
         return userService.deleteById(id);
     }
 }

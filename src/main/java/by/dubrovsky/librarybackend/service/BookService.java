@@ -44,7 +44,7 @@ public class BookService {
     }
 
     public List<BookDTO> getAll() {
-        List<Book> all = bookRepository.findAll();
+        List<Book> all = bookRepository.findAllByOrderById();
         List<BookDTO> booksDTO = new ArrayList<>();
         for (Book book : all) {
             BookDTO bookDTO = bookFacade.bookToDTO(book);

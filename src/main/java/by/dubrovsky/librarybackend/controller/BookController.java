@@ -11,6 +11,7 @@ import java.util.List;
 // конроллер для работы с моделью книги
 @RestController
 @RequestMapping("book")
+@CrossOrigin(origins = "http://localhost:4200")
 public class BookController {
     private final BookService bookService;
 

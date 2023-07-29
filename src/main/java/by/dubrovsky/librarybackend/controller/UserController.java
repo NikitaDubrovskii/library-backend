@@ -10,6 +10,7 @@ import java.util.List;
 // конроллер для работы с моделью пользователя
 @RestController
 @RequestMapping("user")
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
     private final UserService userService;
 

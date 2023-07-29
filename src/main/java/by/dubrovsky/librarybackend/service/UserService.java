@@ -45,13 +45,14 @@ public class UserService {
     }
 
     public List<UserDTO> getAll() {
-        List<User> all = userRepository.findAll();
+        List<User> all = userRepository.findAllByOrderById();
         List<UserDTO> usersDTO = new ArrayList<>();
         for (User user : all) {
             UserDTO userDTO = userFacade.userToDTO(user);
             usersDTO.add(userDTO);
         }
-        return usersDTO;    }
+        return usersDTO;
+    }
 
     /*TODO доделать обновление с ролью админа
        надо чтобы была авторизация и тогда с проверкой, что этот авторизированный пользователь

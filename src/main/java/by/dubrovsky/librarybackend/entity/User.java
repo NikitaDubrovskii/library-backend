@@ -1,6 +1,8 @@
 package by.dubrovsky.librarybackend.entity;
 
+import by.dubrovsky.librarybackend.dto.BookDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -42,6 +44,9 @@ public class User {
     @Column(name = "admin")
     private Boolean admin;
 
+    @OneToMany(mappedBy = "userId", fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("userId")
+    private List<Book> bookList;
 
     public User(String firstName, String secondName, Integer age,
                 String email, LocalDateTime registrationDate, Boolean admin) {

@@ -1,7 +1,10 @@
 package by.dubrovsky.librarybackend.service;
 
+import by.dubrovsky.librarybackend.dto.BookDTO;
 import by.dubrovsky.librarybackend.dto.UserDTO;
+import by.dubrovsky.librarybackend.entity.Book;
 import by.dubrovsky.librarybackend.entity.User;
+import by.dubrovsky.librarybackend.facade.BookFacade;
 import by.dubrovsky.librarybackend.facade.UserFacade;
 import by.dubrovsky.librarybackend.repository.BookRepository;
 import by.dubrovsky.librarybackend.repository.UserRepository;
@@ -21,11 +24,14 @@ public class UserService {
     private final BookRepository bookRepository;
     private final UserFacade userFacade;
 
+    private final BookFacade bookFacade;
+
     public UserService(UserRepository userRepository, BookRepository bookRepository,
-                       UserFacade userFacade) {
+                       UserFacade userFacade, BookFacade bookFacade) {
         this.userRepository = userRepository;
         this.bookRepository = bookRepository;
         this.userFacade = userFacade;
+        this.bookFacade = bookFacade;
     }
 
     @Transactional
@@ -38,7 +44,10 @@ public class UserService {
     public UserDTO getById(Long id) {
         if (userRepository.findById(id).isPresent()) {
             User user = userRepository.findById(id).get();
-            return userFacade.userToDTO(user);
+            UserDTO userDTO = userFacade.userToDTO(user);
+            List<Book> allBooksByUserId = bookRepository.findBooksByUserId(user);
+            user.setBookList(allBooksByUserId);
+            return userDTO;
         } else {
             return null;
         }

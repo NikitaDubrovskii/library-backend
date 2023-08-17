@@ -70,9 +70,10 @@ public class BookService {
     @Transactional
     public BookDTO giveBook(Book book, User user) {
         book.setUserId(user);
+        book.setTaken(true);
         Book bookToUpdate = new Book();
         BeanUtils.copyProperties(book, bookToUpdate,
-                "id", "title", "author", "page", "publicationDate", "quantity");
+                "id", "title", "author", "page", "publicationDate");
         Book save = bookRepository.save(book);
         return bookFacade.bookToDTO(save);
     }
@@ -80,9 +81,10 @@ public class BookService {
     @Transactional
     public BookDTO takeBook(Book book) {
         book.setUserId(null);
+        book.setTaken(false);
         Book bookToUpdate = new Book();
         BeanUtils.copyProperties(book, bookToUpdate,
-                "id", "title", "author", "page", "publicationDate", "quantity");
+                "id", "title", "author", "page", "publicationDate");
         Book save = bookRepository.save(book);
         return bookFacade.bookToDTO(save);
     }

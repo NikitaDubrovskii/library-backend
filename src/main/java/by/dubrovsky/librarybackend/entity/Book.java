@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 // модель книги
 
@@ -45,12 +46,23 @@ public class Book {
     @JsonIgnoreProperties("bookList")
     private User userId;
 
-    public Book(String title, String author, Integer page, LocalDate publicationDate, Boolean taken, User userId) {
+    @Column(name = "taken_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date takenAt;
+
+    @Column(name = "expired")
+    private Boolean expired;
+
+    public Book(String title, String author, Integer page,
+                LocalDate publicationDate, Boolean taken,
+                User userId, Date takenAt, Boolean expired) {
         this.title = title;
         this.author = author;
         this.page = page;
         this.publicationDate = publicationDate;
         this.taken = taken;
         this.userId = userId;
+        this.takenAt = takenAt;
+        this.expired = expired;
     }
 }

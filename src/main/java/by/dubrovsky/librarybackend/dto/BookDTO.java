@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Data;
 
+import java.util.Date;
+
 // dto для разделения модели на сервере и модели на клиенте
 // (не все данные нужны клиенту, которые есть на сервере)
 @Data
@@ -15,4 +17,6 @@ public class BookDTO {
     private Integer page;
     private Boolean taken;
     private User userId;
+    private Date takenAt;
+    private Boolean expired;
 }

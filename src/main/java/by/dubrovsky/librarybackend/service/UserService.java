@@ -1,6 +1,5 @@
 package by.dubrovsky.librarybackend.service;
 
-import by.dubrovsky.librarybackend.dto.BookDTO;
 import by.dubrovsky.librarybackend.dto.UserDTO;
 import by.dubrovsky.librarybackend.entity.Book;
 import by.dubrovsky.librarybackend.entity.User;

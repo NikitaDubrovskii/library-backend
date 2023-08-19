@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 // сервис для работы с моделью книги
@@ -37,14 +38,27 @@ public class BookService {
     public BookDTO getById(Long id) {
         if (bookRepository.findById(id).isPresent()) {
             Book book = bookRepository.findById(id).get();
+            /*long diffInMilles = Math.abs(book.getTakenAt().getTime() - new Date().getTime()); // 30 дней = 2592000000 миллисекунд
+            if (diffInMilles > 2592000000L) {
+                book.setExpired(true);
+            }*/
             return bookFacade.bookToDTO(book);
         } else {
             return null;
         }
     }
 
+    @Transactional
     public List<BookDTO> getAll() {
         List<Book> all = bookRepository.findAllByOrderById();
+        all.forEach(book -> {
+            if (book.getTaken() && !book.getExpired()) {
+                long diffInMilles = Math.abs(book.getTakenAt().getTime() - new Date().getTime()); // 30 дней = 2592000000 миллисекунд
+                if (diffInMilles > 2592000000L) {
+                    bookRepository.setExpired(book.getId(), true);
+                }
+            }
+        });
         List<BookDTO> booksDTO = new ArrayList<>();
         for (Book book : all) {
             BookDTO bookDTO = bookFacade.bookToDTO(book);
@@ -55,7 +69,7 @@ public class BookService {
 
     @Transactional
     public BookDTO update(Book bookFromDb, Book bookToUpdate) {
-        BeanUtils.copyProperties(bookToUpdate, bookFromDb, "id");
+        BeanUtils.copyProperties(bookToUpdate, bookFromDb, "id", "user_id", "taken", "taken_at");
         Book book = bookRepository.save(bookFromDb);
         return bookFacade.bookToDTO(book);
     }
@@ -71,9 +85,11 @@ public class BookService {
     public BookDTO giveBook(Book book, User user) {
         book.setUserId(user);
         book.setTaken(true);
+        book.setTakenAt(new Date());
+
         Book bookToUpdate = new Book();
         BeanUtils.copyProperties(book, bookToUpdate,
-                "id", "title", "author", "page", "publicationDate");
+                "id", "title", "author", "page", "publicationDate"); // игнорируем параметры, которые не выставляются в этом методе
         Book save = bookRepository.save(book);
         return bookFacade.bookToDTO(save);
     }
@@ -82,9 +98,12 @@ public class BookService {
     public BookDTO takeBook(Book book) {
         book.setUserId(null);
         book.setTaken(false);
+        book.setTakenAt(null);
+        book.setExpired(false);
+
         Book bookToUpdate = new Book();
         BeanUtils.copyProperties(book, bookToUpdate,
-                "id", "title", "author", "page", "publicationDate");
+                "id", "title", "author", "page", "publicationDate"); // игнорируем параметры, которые не выставляются в этом методе
         Book save = bookRepository.save(book);
         return bookFacade.bookToDTO(save);
     }

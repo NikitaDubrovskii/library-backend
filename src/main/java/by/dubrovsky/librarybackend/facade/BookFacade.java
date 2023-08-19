@@ -17,7 +17,7 @@ public class BookFacade {
 
     public BookDTO bookToDTO(Book book) {
         BookDTO bookDTO = new BookDTO();
-        BeanUtils.copyProperties(book, bookDTO, "publicationDate");
+        BeanUtils.copyProperties(book, bookDTO);
         return bookDTO;
     }
 }

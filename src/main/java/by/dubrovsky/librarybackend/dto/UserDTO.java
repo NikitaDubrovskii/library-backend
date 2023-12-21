@@ -1,8 +1,6 @@
 package by.dubrovsky.librarybackend.dto;
 
 import by.dubrovsky.librarybackend.entity.Book;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import lombok.Data;
 
 import java.util.List;

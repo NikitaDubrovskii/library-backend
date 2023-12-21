@@ -1,7 +1,6 @@
 package by.dubrovsky.librarybackend.facade;
 
 import by.dubrovsky.librarybackend.dto.BookDTO;
-import by.dubrovsky.librarybackend.dto.UserDTO;
 import by.dubrovsky.librarybackend.entity.Book;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;

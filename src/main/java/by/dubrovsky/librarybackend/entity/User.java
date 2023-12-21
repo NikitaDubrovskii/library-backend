@@ -1,6 +1,5 @@
 package by.dubrovsky.librarybackend.entity;
 
-import by.dubrovsky.librarybackend.dto.BookDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;

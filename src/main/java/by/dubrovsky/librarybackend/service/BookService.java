@@ -52,10 +52,12 @@ public class BookService {
     public List<BookDTO> getAll() {
         List<Book> all = bookRepository.findAllByOrderById();
         all.forEach(book -> {
-            if (book.getTaken() && !book.getExpired()) {
-                long diffInMilles = Math.abs(book.getTakenAt().getTime() - new Date().getTime()); // 30 дней = 2592000000 миллисекунд
-                if (diffInMilles > 2592000000L) {
-                    bookRepository.setExpired(book.getId(), true);
+            if (book.getTaken() != null) {
+                if (book.getTaken() && !book.getExpired()) {
+                    long diffInMilles = Math.abs(book.getTakenAt().getTime() - new Date().getTime()); // 30 дней = 2592000000 миллисекунд
+                    if (diffInMilles > 2592000000L) {
+                        bookRepository.setExpired(book.getId(), true);
+                    }
                 }
             }
         });
